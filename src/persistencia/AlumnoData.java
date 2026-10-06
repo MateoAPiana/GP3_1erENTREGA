@@ -85,7 +85,7 @@ public class AlumnoData {
                 a.setId(rs.getInt("idAlumno"));
                 a.setDni(rs.getInt("dni"));
                 a.setNombre(rs.getString("nombre"));
-                a.setFecNac(rs.getDate("fechaNac").toLocalDate());
+                a.setFecNac(rs.getDate("fecNac").toLocalDate());
                 a.setActivo(rs.getBoolean("activo"));
                 alumnos.add(a);
             }
