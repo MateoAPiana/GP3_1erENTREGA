@@ -97,4 +97,42 @@ public class AlumnoData {
         
         return alumnos;
     } // SELECT *
+    
+//    public void actualizarAlumno(Alumno a){
+//        String query = "UPDATE ";  //1
+//        
+//        try {
+//           // PreparedStatement ps = ........................(query); //2
+//            //setString(1, a.getNombre());
+//            //setInt(2, .......);
+//            ps.setDate(... , Date.valueOf(a.getFecNac()));
+//            ps.setBoolean(... , a.getActivo());
+//            //................(5, a.getId());
+//            ps.executeUpdate();     // 3
+//                       
+//            ps.close();
+//            
+//        } catch (SQLException ex) {
+//            Logger.getLogger(AlumnoData.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//      
+//    }  // UPDATE SET
+    
+    public void borrarAlumno(int id){
+            
+        String query = "DELETE FROM Alumno WHERE idAlumno=?";  //1
+        
+        try {
+            PreparedStatement ps = con.prepareStatement(query); //2
+            ps.setInt(1, id);
+            ps.executeUpdate();     // 3
+            
+            ps.close();  // 4
+            
+            System.out.println("Se elimino el alumno con id " + id + " correctamente");
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(AlumnoData.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+    }// UPDATE SET / DELETE
 }

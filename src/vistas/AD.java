@@ -14,6 +14,12 @@ public class AD {
     public static void main(String[] args) {
         AlumnoData alumnoData= new AD().conectar();
         
+        List<Alumno> alumnosAntiguos = alumnoData.listarAlumnos();
+        
+        for (Alumno a : alumnosAntiguos){
+            alumnoData.borrarAlumno(a.getId());
+        }
+        
         Alumno alumno1 = new Alumno(28180533, "Mateo Piana", LocalDate.of(2007, Month.FEBRUARY, 9), true);
         Alumno alumno2 = new Alumno(28180533, "Donato Santagata", LocalDate.of(2004, Month.MARCH, 11), true);
         Alumno alumno3 = new Alumno(28180533, "Genaro Farias", LocalDate.of(2007, Month.SEPTEMBER, 9), true);
