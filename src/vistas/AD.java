@@ -63,7 +63,7 @@ public class AD {
         
         
         // Profe: Cambia AQUI 3008 a 3006 !!!!
-        conexion = new MiConexion("jdbc:mysql://localhost:3308/c1g3universidad", "root", "");  
+        conexion = new MiConexion("jdbc:mysql://localhost:3306/c1g3universidad", "root", "");  
                
         return conexion;
     }

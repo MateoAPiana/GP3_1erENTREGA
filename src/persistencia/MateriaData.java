@@ -79,4 +79,21 @@ public class MateriaData {
         }
         return materias;
     }
+    public void actualizarMateria(Materia materia){
+        String sql = "UPDATE `materia` SET nombre = ?, estado = ?  WHERE `idMateria` = ? ";  //1
+        
+        try {
+            PreparedStatement ps = con.prepareStatement(sql); //2
+              ps.setString(1,materia.getNombre());
+              ps.setInt(2,materia.getEstado());
+              ps.setInt(3,materia.getId());
+              ps.executeUpdate();
+
+            ps.close();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(AlumnoData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      
+    } 
 }
