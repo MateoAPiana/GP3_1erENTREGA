@@ -2,16 +2,20 @@ package entidades;
 
 
 public class Materia {
-    private int id;
+    private int id = -1;
     private String nombre;
     private boolean estado;
 
     public Materia() {
-        this.id = -1;
     }
 
     public Materia(int id, String nombre, boolean estado) {
-        this.id = -1;
+        this.id = id;
+        this.nombre = nombre;
+        this.estado = estado;
+    }
+
+    public Materia(String nombre, boolean estado) {
         this.nombre = nombre;
         this.estado = estado;
     }

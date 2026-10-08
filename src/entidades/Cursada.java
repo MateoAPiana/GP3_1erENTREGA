@@ -13,6 +13,15 @@ public class Cursada {
         this.id = -1;
     }
 
+    public Cursada(int id, Alumno alumno, Materia materia, float nota, float asist, int cursa) {
+        this.id = id;
+        this.alumno = alumno;
+        this.materia = materia;
+        this.nota = nota;
+        this.asist = asist;
+        this.cursa = cursa;
+    }
+
     public Cursada(Alumno alumno, Materia materia, float nota, float asist, int cursa) {
         this.id = -1;
         this.alumno = alumno;

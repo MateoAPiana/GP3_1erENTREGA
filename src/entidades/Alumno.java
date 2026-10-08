@@ -11,7 +11,7 @@ public class Alumno {
     private boolean activo;
 
     public Alumno(){
-        this.id = id;
+        this.id = -1;
     }
     
     public Alumno(int id, int dni, String nombre, LocalDate fecNac, boolean activo) {
