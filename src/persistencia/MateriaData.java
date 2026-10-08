@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class MateriaData {
     private Connection con = null;
@@ -19,7 +21,7 @@ public class MateriaData {
         try{
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, m.getNombre());
-            ps.setBoolean(2, m.isEstado());
+            ps.setInt(2, m.getEstado());
             ps.executeUpdate();
             
             ResultSet rs = ps.getGeneratedKeys();  // recupero y asigno
@@ -33,7 +35,25 @@ public class MateriaData {
         }catch(SQLException ex){
             System.out.println(ex.toString());
         }
+    }
+    
+    public Materia buscarMateria(int id){
+        Materia m = null;
         
+        String sql = "SELECT * FROM Materia WHERE idMateria = ?";
         
+        try{
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                m = new Materia(id, rs.getString("nombre"), rs.getInt("estado"));
+            }
+            ps.close();
+        }catch(SQLException ex){
+            Logger.getLogger(AlumnoData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return m;
     }
 }

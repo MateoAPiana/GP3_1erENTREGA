@@ -18,9 +18,13 @@ public class AD {
         
         MateriaData materiaData = new MateriaData(miCon);
         
-        Materia materia1 = new Materia("Lab 1", true);
+        Materia materia1 = new Materia("Lab 1", 1);
         
         materiaData.guardarMateria(materia1);
+        
+        Materia m1 = materiaData.buscarMateria(materia1.getId());
+        
+        System.out.println(m1.toString());
         
 //        AlumnoData alumnoData= new AlumnoData(miCon);
 //        

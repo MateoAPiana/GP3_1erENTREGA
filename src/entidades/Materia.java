@@ -3,20 +3,25 @@ package entidades;
 public class Materia {
     private int id = -1;
     private String nombre;
-    private boolean estado;
+    private int estado;
 
     public Materia() {
     }
 
-    public Materia(int id, String nombre, boolean estado) {
+    public Materia(int id, String nombre, int estado) {
         this.id = id;
         this.nombre = nombre;
         this.estado = estado;
     }
 
-    public Materia(String nombre, boolean estado) {
+    public Materia(String nombre, int estado) {
         this.nombre = nombre;
         this.estado = estado;
+    }
+    
+    @Override
+    public String toString(){
+        return "Materia " + nombre;
     }
 
     public int getId() {
@@ -35,11 +40,11 @@ public class Materia {
         this.nombre = nombre;
     }
 
-    public boolean isEstado() {
+    public int getEstado() {
         return estado;
     }
 
-    public void setEstado(boolean estado) {
+    public void setEstado(int estado) {
         this.estado = estado;
     }    
 }
