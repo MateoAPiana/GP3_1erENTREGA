@@ -95,5 +95,22 @@ public class MateriaData {
             Logger.getLogger(AlumnoData.class.getName()).log(Level.SEVERE, null, ex);
         }
       
-    } 
+    }
+    public void borrarMateria(int id){
+        String sql = "DELETE FROM materia WHERE idMateria = ?";  //1
+        
+        try {
+            PreparedStatement ps = con.prepareStatement(sql); //2
+              
+              ps.setInt(1,id);
+              
+              ps.executeUpdate();
+
+            ps.close();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(AlumnoData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
 }
