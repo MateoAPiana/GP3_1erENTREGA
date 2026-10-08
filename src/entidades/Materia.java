@@ -1,6 +1,5 @@
 package entidades;
 
-
 public class Materia {
     private int id = -1;
     private String nombre;
