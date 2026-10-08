@@ -24,7 +24,11 @@ public class AD {
         
         Materia m1 = materiaData.buscarMateria(materia1.getId());
         
-        System.out.println(m1.toString());
+        List<Materia> materiasAntiguos = materiaData.listarMaterias();
+        
+        for (Materia m : materiasAntiguos){
+            System.out.println(m.toString());
+        }
         
 //        AlumnoData alumnoData= new AlumnoData(miCon);
 //        
