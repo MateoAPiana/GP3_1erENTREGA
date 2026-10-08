@@ -32,7 +32,7 @@ public class Alumno {
     
     @Override
     public String toString(){
-        return "Alumno: " + nombre + "\nDNI: " + dni;
+        return "Alumno: " + nombre + "\nDNI: " + dni + "Estado: " +activo;
     }
 
     public int getId() {

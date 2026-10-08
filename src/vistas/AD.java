@@ -36,6 +36,13 @@ public class AD {
             System.out.println(a.toString());
         }
         
+        
+        alumnoData.bajaLogicaAlumno(alumno3.getId());
+        alumnos = alumnoData.listarAlumnos();
+           for(Alumno a : alumnos){
+            System.out.println(a.toString());
+        }
+        
     }
 
     AlumnoData conectar() {
@@ -45,7 +52,7 @@ public class AD {
         
         
         // Profe: Cambia AQUI 3008 a 3006 !!!!
-        conexion = new MiConexion("jdbc:mysql://localhost:3308/c1g3universidad", "root", "");  
+        conexion = new MiConexion("jdbc:mysql://localhost:3306/c1g3universidad", "root", "");  
                
         alumnoData = new AlumnoData(conexion);   // alumno
         return alumnoData;

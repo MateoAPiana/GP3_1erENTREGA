@@ -54,7 +54,7 @@ public class AlumnoData {
         PreparedStatement ps;
         try {
             ps = con.prepareStatement(sql);    // 2
-              ps.setInt(1, id);
+            ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();  //3
             while (rs.next()) {  // 4 armo el objeto
                 a = new Alumno();
@@ -72,15 +72,15 @@ public class AlumnoData {
 
         return a;
     }  // SELECT 1 ALUMNO
-    
-    public List<Alumno> listarAlumnos(){
-        Alumno a= null;   // ALUMNO recipiente
+
+    public List<Alumno> listarAlumnos() {
+        Alumno a = null;   // ALUMNO recipiente
         ArrayList<Alumno> alumnos = new ArrayList<>();
         String query = "SELECT * FROM Alumno";  // 1
         try {
             PreparedStatement ps = con.prepareStatement(query); //2
             ResultSet rs = ps.executeQuery();  //3
-            while(rs.next()){     //4
+            while (rs.next()) {     //4
                 a = new Alumno();
                 a.setId(rs.getInt("idAlumno"));
                 a.setDni(rs.getInt("dni"));
@@ -90,17 +90,17 @@ public class AlumnoData {
                 alumnos.add(a);
             }
             ps.close();   // 5
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(AlumnoData.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return alumnos;
     } // SELECT *
-    
-    public void actualizarAlumno(Alumno a){
+
+    public void actualizarAlumno(Alumno a) {
         String query = "UPDATE `alumno` SET `dni` = ?, `nombre` = ?, `fecNac` = ?, `activo` = ? WHERE `alumno`.`idAlumno` = ? ";  //1
-        
+
         try {
             PreparedStatement ps = con.prepareStatement(query); //2
             ps.setInt(1, a.getDni());
@@ -111,28 +111,66 @@ public class AlumnoData {
             ps.executeUpdate();     // 3
 
             ps.close();
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(AlumnoData.class.getName()).log(Level.SEVERE, null, ex);
         }
-      
+
     }  // UPDATE SET
-    
-    public void borrarAlumno(int id){
-            
+
+    public void borrarAlumno(int id) {
+
         String query = "DELETE FROM Alumno WHERE idAlumno=?";  //1
-        
+
         try {
             PreparedStatement ps = con.prepareStatement(query); //2
             ps.setInt(1, id);
             ps.executeUpdate();     // 3
-            
+
             ps.close();  // 4
-            
+
             System.out.println("Se elimino el alumno con id " + id + " correctamente");
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(AlumnoData.class.getName()).log(Level.SEVERE, null, ex);
-        } 
-    }// UPDATE SET / DELETE
+        }
+    }
+
+    public void bajaLogicaAlumno(int id) {
+        String sql = "UPDATE alumno SET activo = 0 WHERE idAlumno = ?";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            int filas = ps.executeUpdate();
+
+            if (filas > 0) {
+                System.out.println("Baja lógica realizada correctamente al alumno ID: " + id);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(AlumnoData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
+    public void altaLogicaAlumno(int id) {
+    String sql = "UPDATE alumno SET activo = 1 WHERE idAlumno = ?";
+
+    try {
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setInt(1, id);
+        int filas = ps.executeUpdate();
+
+        if (filas > 0) {
+            System.out.println("Alta lógica realizada correctamente al alumno ID: " + id);
+        }
+        ps.close();
+    } catch (SQLException ex) {
+        Logger.getLogger(AlumnoData.class.getName()).log(Level.SEVERE, null, ex);
+    }
+}
+    
+    
+    
 }
