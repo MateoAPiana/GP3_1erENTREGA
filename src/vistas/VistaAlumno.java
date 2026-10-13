@@ -3,20 +3,23 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
  */
 package vistas;
+
 import entidades.*;
+import java.time.LocalDate;
 import persistencia.*;
 import java.util.List;
+
 public class VistaAlumno extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form VistaAlumno
      */
-    
     AlumnoData alumnoData = null;
+
     public VistaAlumno() {
         initComponents();
         MiConexion conexion = new MiConexion("jdbc:mysql://localhost:3308/c1g3universidad", "root", "");
-        this.alumnoData= new AlumnoData(conexion);
+        this.alumnoData = new AlumnoData(conexion);
     }
 
     /**
@@ -76,6 +79,11 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
         btnEliminar.setEnabled(false);
 
         btnGuardar.setText("Guardar");
+        btnGuardar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                guardarAlumno(evt);
+            }
+        });
 
         btnSalir.setText("Salir");
 
@@ -165,138 +173,140 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtDniActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-    try {
-        if (txtDni.getText().trim().isEmpty()) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Ingrese un número de DNI para buscar.");
-            return;
-        }
-        
-        List<Alumno> alumnos = alumnoData.listarAlumnos();
-        
-        Alumno a = null;
-        
-        for (Alumno i : alumnos){
-            if((i.getDni() == Integer.valueOf(txtDni.getText()))){
-                a = i;
-                break;
+        try {
+            if (txtDni.getText().trim().isEmpty()) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Ingrese un número de DNI para buscar.");
+                return;
             }
+            
+            List<Alumno> alumnos = alumnoData.listarAlumnos();
+            
+            Alumno a = null;
+            
+            for (Alumno i : alumnos) {
+                if ((i.getDni() == Integer.valueOf(txtDni.getText()))) {
+                    a = i;
+                    break;
+                }
+            }
+            
+            if (a == null) {
+                javax.swing.JOptionPane.showMessageDialog(this, "No se encontró alumno con ese DNI");
+                return;
+            }
+            
+            txtNombre.setText(a.getNombre());
+            txtDni.setText(String.valueOf(a.getDni()));
+            txtFechaNac.setText(a.getFecNac().toString());
+            
+            if (a.isActivo()) {
+                chkEstado.setSelected(true);
+            } else {
+                chkEstado.setSelected(false);
+            }
+            
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "El DNI debe ser un número entero válido.");
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error al buscar: " + e.getMessage());
         }
-        
-        if(a == null) {
-            javax.swing.JOptionPane.showMessageDialog(this, "No se encontró alumno con ese DNI");
-            return;
-        }
-        
-        txtNombre.setText(a.getNombre());
-        txtDni.setText(String.valueOf(a.getDni()));
-        txtFechaNac.setText(a.getFecNac().toString());
-        
-        if(a.isActivo()) chkEstado.setSelected(true);
-        else chkEstado.setSelected(false);
-    
-
-    } catch (NumberFormatException e) {
-        javax.swing.JOptionPane.showMessageDialog(this, "El DNI debe ser un número entero válido.");
-    } catch (Exception e) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Error al buscar: " + e.getMessage());
-    }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
-     limpiarCampos();
+        limpiarCampos();
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-    try {
-        if (txtDni.getText().trim().isEmpty() || txtNombre.getText().trim().isEmpty() || txtFechaNac.getText().trim().isEmpty()) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Por favor complete todos los campos.");
-            return;
+        try {
+            if (txtDni.getText().trim().isEmpty() || txtNombre.getText().trim().isEmpty() || txtFechaNac.getText().trim().isEmpty()) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Por favor complete todos los campos.");
+                return;
+            }
+            
+            int dni = Integer.parseInt(txtDni.getText().trim());
+            String nombre = txtNombre.getText().trim();
+            java.time.LocalDate fechaNac = java.time.LocalDate.parse(txtFechaNac.getText().trim());
+            boolean activo = chkEstado.isSelected();
+            
+            Alumno alu = new Alumno(dni, nombre, fechaNac, activo);
+            
+            MiConexion conexion = new MiConexion("jdbc:mysql://localhost:3306/c1g3universidad", "root", "");
+            AlumnoData aluData = new AlumnoData(conexion);
+            
+            aluData.guardarAlumno(alu);
+            
+            javax.swing.JOptionPane.showMessageDialog(this, "Alumno guardado con éxito.");
+            limpiarCampos();
+            
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "El DNI debe ser un número entero válido.");
+        } catch (java.time.format.DateTimeParseException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "La fecha debe tener el formato AAAA-MM-DD (ej: 2000-01-15).");
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error al guardar: " + e.getMessage());
         }
-
-        int dni = Integer.parseInt(txtDni.getText().trim());
-        String nombre = txtNombre.getText().trim();
-        java.time.LocalDate fechaNac = java.time.LocalDate.parse(txtFechaNac.getText().trim());
-        boolean activo = chkEstado.isSelected();
-
-        Alumno alu = new Alumno(dni, nombre, fechaNac, activo);
-
-        MiConexion conexion = new MiConexion("jdbc:mysql://localhost:3306/c1g3universidad", "root", "");
-        AlumnoData aluData = new AlumnoData(conexion);
-
-        aluData.guardarAlumno(alu);
-
-        javax.swing.JOptionPane.showMessageDialog(this, "Alumno guardado con éxito.");
-        limpiarCampos();
-
-    } catch (NumberFormatException e) {
-        javax.swing.JOptionPane.showMessageDialog(this, "El DNI debe ser un número entero válido.");
-    } catch (java.time.format.DateTimeParseException e) {
-        javax.swing.JOptionPane.showMessageDialog(this, "La fecha debe tener el formato AAAA-MM-DD (ej: 2000-01-15).");
-    } catch (Exception e) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Error al guardar: " + e.getMessage());
-    }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-    try {
-        if (txtDni.getText().trim().isEmpty()) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Ingrese el DNI del alumno a eliminar.");
-            return;
-        }
-
-        int dni = Integer.parseInt(txtDni.getText().trim());
-
-        // Conexión directa estándar y conexión para AlumnoData
-        java.sql.Connection con = java.sql.DriverManager.getConnection("jdbc:mysql://localhost:3306/c1g3universidad", "root", "");
-        MiConexion conexion = new MiConexion("jdbc:mysql://localhost:3306/c1g3universidad", "root", "");
-
-        String sqlBuscar = "SELECT * FROM alumno WHERE dni = ?";
-        java.sql.PreparedStatement psBuscar = con.prepareStatement(sqlBuscar);
-        psBuscar.setInt(1, dni);
-        java.sql.ResultSet rs = psBuscar.executeQuery();
-
-        if (rs.next()) {
-            String nombre = rs.getString("nombre");
-            int idAlumno = rs.getInt("idAlumno");
-
-            int confirmacion = javax.swing.JOptionPane.showConfirmDialog(
-                this, 
-                "¿Desea borrar al alumno " + nombre + "?", 
-                "Confirmar borrado", 
-                javax.swing.JOptionPane.YES_NO_OPTION
-            );
-
-            if (confirmacion == javax.swing.JOptionPane.YES_OPTION) {
-                AlumnoData aluData = new AlumnoData(conexion);
-                aluData.borrarAlumno(idAlumno);
-                
-                javax.swing.JOptionPane.showMessageDialog(this, "Alumno borrado correctamente.");
-                limpiarCampos();
+        try {
+            if (txtDni.getText().trim().isEmpty()) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Ingrese el DNI del alumno a eliminar.");
+                return;
             }
-        } else {
-            javax.swing.JOptionPane.showMessageDialog(this, "No se encontró ningún alumno con ese DNI.");
+            
+            int dni = Integer.parseInt(txtDni.getText().trim());
+
+            // Conexión directa estándar y conexión para AlumnoData
+            java.sql.Connection con = java.sql.DriverManager.getConnection("jdbc:mysql://localhost:3306/c1g3universidad", "root", "");
+            MiConexion conexion = new MiConexion("jdbc:mysql://localhost:3306/c1g3universidad", "root", "");
+            
+            String sqlBuscar = "SELECT * FROM alumno WHERE dni = ?";
+            java.sql.PreparedStatement psBuscar = con.prepareStatement(sqlBuscar);
+            psBuscar.setInt(1, dni);
+            java.sql.ResultSet rs = psBuscar.executeQuery();
+            
+            if (rs.next()) {
+                String nombre = rs.getString("nombre");
+                int idAlumno = rs.getInt("idAlumno");
+                
+                int confirmacion = javax.swing.JOptionPane.showConfirmDialog(
+                        this,
+                        "¿Desea borrar al alumno " + nombre + "?",
+                        "Confirmar borrado",
+                        javax.swing.JOptionPane.YES_NO_OPTION
+                );
+                
+                if (confirmacion == javax.swing.JOptionPane.YES_OPTION) {
+                    AlumnoData aluData = new AlumnoData(conexion);
+                    aluData.borrarAlumno(idAlumno);
+                    
+                    javax.swing.JOptionPane.showMessageDialog(this, "Alumno borrado correctamente.");
+                    limpiarCampos();
+                }
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this, "No se encontró ningún alumno con ese DNI.");
+            }
+            
+            psBuscar.close();
+            con.close();
+            
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "El DNI debe ser un número entero válido.");
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error al eliminar: " + e.getMessage());
         }
-
-        psBuscar.close();
-        con.close();
-
-    } catch (NumberFormatException e) {
-        javax.swing.JOptionPane.showMessageDialog(this, "El DNI debe ser un número entero válido.");
-    } catch (Exception e) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Error al eliminar: " + e.getMessage());
-    }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-     this.dispose();
-}
-
-private void limpiarCampos() {
-    txtDni.setText("");
-    txtNombre.setText("");
-    txtFechaNac.setText("");
-    chkEstado.setSelected(true);
-    txtDni.requestFocus();
+        this.dispose();
+    }
+    
+    private void limpiarCampos() {
+        txtDni.setText("");
+        txtNombre.setText("");
+        txtFechaNac.setText("");
+        chkEstado.setSelected(true);
+        txtDni.requestFocus();
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void reset(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reset
@@ -305,6 +315,28 @@ private void limpiarCampos() {
         txtFechaNac.setText("");
         chkEstado.setSelected(false);
     }//GEN-LAST:event_reset
+
+    private void guardarAlumno(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_guardarAlumno
+        try {
+            String fecha = txtFechaNac.getText();
+            int year = Integer.valueOf(fecha.substring(0, 4));
+            int mounth = Integer.valueOf(fecha.substring(5, 7));
+            int day = Integer.valueOf(fecha.substring(8));
+            Alumno a = new Alumno(
+                    Integer.valueOf(txtDni.getText()),
+                    txtNombre.getText(),
+                    LocalDate.of(year, mounth, day), chkEstado.isSelected()
+            );
+            
+            alumnoData.guardarAlumno(a);
+            reset(evt);
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Ingrese valores válidos.\n Formato de fecha 20NN-NN-NN");
+            System.out.println(e.toString());
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error al agregar: " + e.getMessage());
+        }
+    }//GEN-LAST:event_guardarAlumno
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
