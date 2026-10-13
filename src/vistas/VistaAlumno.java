@@ -5,13 +5,18 @@
 package vistas;
 import entidades.*;
 import persistencia.*;
+import java.util.List;
 public class VistaAlumno extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form VistaAlumno
      */
+    
+    AlumnoData alumnoData = null;
     public VistaAlumno() {
         initComponents();
+        MiConexion conexion = new MiConexion("jdbc:mysql://localhost:3308/c1g3universidad", "root", "");
+        this.alumnoData= new AlumnoData(conexion);
     }
 
     /**
@@ -27,6 +32,8 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         txtDni = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        txtApellido = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
@@ -48,7 +55,9 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(this::btnBuscarActionPerformed);
 
-        jLabel4.setText("Nombre y Apellido:");
+        jLabel3.setText("Apellido:");
+
+        jLabel4.setText("Nombre:");
 
         jLabel5.setText("Estado:");
 
@@ -57,16 +66,13 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
         jLabel6.setText("Fecha de Nacimiento:");
 
         btnNuevo.setText("Nuevo");
-        btnNuevo.addActionListener(this::btnNuevoActionPerformed);
 
         btnEliminar.setText("Eliminar");
-        btnEliminar.addActionListener(this::btnEliminarActionPerformed);
+        btnEliminar.setEnabled(false);
 
         btnGuardar.setText("Guardar");
-        btnGuardar.addActionListener(this::btnGuardarActionPerformed);
 
         btnSalir.setText("Salir");
-        btnSalir.addActionListener(this::btnSalirActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -80,52 +86,52 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
                             .addComponent(jLabel1))
                         .addGroup(layout.createSequentialGroup()
                             .addContainerGap()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel2)
+                                .addComponent(jLabel3)
+                                .addComponent(jLabel4)
+                                .addComponent(jLabel5))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(chkEstado)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(txtDni)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(btnBuscar))
+                                    .addComponent(txtApellido)
+                                    .addComponent(txtNombre))))
+                        .addGroup(layout.createSequentialGroup()
+                            .addContainerGap()
                             .addComponent(jLabel6)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addComponent(txtFechaNac)))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnNuevo)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnEliminar)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnGuardar)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnSalir))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel5))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(31, 31, 31)
-                                        .addComponent(chkEstado)
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(18, 18, 18)
-                                        .addComponent(txtNombre))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtDni)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(45, 45, 45))
+                        .addComponent(btnNuevo)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnEliminar)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnGuardar)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnSalir)))
+                .addContainerGap(45, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(35, 35, 35)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtDni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnBuscar)))
-                .addGap(18, 18, 18)
+                    .addComponent(txtDni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -143,7 +149,7 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
                     .addComponent(btnEliminar)
                     .addComponent(btnGuardar)
                     .addComponent(btnSalir))
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         pack();
@@ -159,29 +165,30 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
             javax.swing.JOptionPane.showMessageDialog(this, "Ingrese un número de DNI para buscar.");
             return;
         }
-
-        int dni = Integer.parseInt(txtDni.getText().trim());
-
-        // Conexión directa estándar
-        java.sql.Connection con = java.sql.DriverManager.getConnection("jdbc:mysql://localhost:3306/c1g3universidad", "root", "");
         
-        String sql = "SELECT * FROM alumno WHERE dni = ?";
-        java.sql.PreparedStatement ps = con.prepareStatement(sql);
-        ps.setInt(1, dni);
-        java.sql.ResultSet rs = ps.executeQuery();
-
-        if (rs.next()) {
-            txtNombre.setText(rs.getString("nombre"));
-            chkEstado.setSelected(rs.getBoolean("estado"));
-            if (rs.getDate("fecNac") != null) {
-                txtFechaNac.setText(rs.getDate("fecNac").toString());
+        List<Alumno> alumnos = alumnoData.listarAlumnos();
+        
+        Alumno a = null;
+        
+        for (Alumno i : alumnos){
+            if((i.getDni() == Integer.valueOf(txtDni.getText()))){
+                a = i;
+                break;
             }
-        } else {
-            javax.swing.JOptionPane.showMessageDialog(this, "No existe un alumno cargado con ese DNI.");
         }
         
-        ps.close();
-        con.close();
+        if(a == null) {
+            javax.swing.JOptionPane.showMessageDialog(this, "No se encontró alumno con ese DNI");
+            return;
+        }
+        
+        txtNombre.setText(a.getNombre());
+        txtDni.setText(String.valueOf(a.getDni()));
+        txtFechaNac.setText(a.getFecNac().toString());
+        
+        if(a.isActivo()) chkEstado.setSelected(true);
+        else chkEstado.setSelected(false);
+    
 
     } catch (NumberFormatException e) {
         javax.swing.JOptionPane.showMessageDialog(this, "El DNI debe ser un número entero válido.");
@@ -296,9 +303,11 @@ private void limpiarCampos() {
     private javax.swing.JCheckBox chkEstado;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JTextField txtApellido;
     private javax.swing.JTextField txtDni;
     private javax.swing.JTextField txtFechaNac;
     private javax.swing.JTextField txtNombre;
