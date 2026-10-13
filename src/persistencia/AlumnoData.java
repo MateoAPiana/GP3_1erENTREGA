@@ -101,6 +101,8 @@ public class AlumnoData {
     public void actualizarAlumno(Alumno a){
         String query = "UPDATE `alumno` SET `dni` = ?, `nombre` = ?, `fecNac` = ?, `activo` = ? WHERE `alumno`.`idAlumno` = ? ";  //1
         
+        System.out.println("Actualizando alumno " + a.getNombre() + " - " + a.getId());
+        
         try {
             PreparedStatement ps = con.prepareStatement(query); //2
             ps.setInt(1, a.getDni());

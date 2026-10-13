@@ -177,11 +177,11 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
             if (txtDni.getText().trim().isEmpty()) {
                 javax.swing.JOptionPane.showMessageDialog(this, "Ingrese un número de DNI para buscar.");
                 return;
-            }
-            
-            List<Alumno> alumnos = alumnoData.listarAlumnos();
+            }            
             
             Alumno a = null;
+            
+            List<Alumno> alumnos = alumnoData.listarAlumnos();
             
             for (Alumno i : alumnos) {
                 if ((i.getDni() == Integer.valueOf(txtDni.getText()))) {
@@ -317,18 +317,40 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_reset
 
     private void guardarAlumno(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_guardarAlumno
+        boolean existe = false;
+        Alumno a = null;
+        
+        List<Alumno> alumnos = alumnoData.listarAlumnos();
+
+        for (Alumno i : alumnos) {
+            if ((i.getDni() == Integer.valueOf(txtDni.getText()))) {
+                a = i;
+                existe = true;
+                break;
+            }
+        }
+
         try {
             String fecha = txtFechaNac.getText();
             int year = Integer.valueOf(fecha.substring(0, 4));
             int mounth = Integer.valueOf(fecha.substring(5, 7));
             int day = Integer.valueOf(fecha.substring(8));
-            Alumno a = new Alumno(
-                    Integer.valueOf(txtDni.getText()),
-                    txtNombre.getText(),
-                    LocalDate.of(year, mounth, day), chkEstado.isSelected()
-            );
+            if(a == null) a = new Alumno();
             
-            alumnoData.guardarAlumno(a);
+            a.setDni(Integer.valueOf(txtDni.getText()));
+            a.setNombre(txtNombre.getText());
+            a.setFecNac(LocalDate.of(year, mounth, day));
+            a.setActivo(chkEstado.isSelected());
+            
+            if(existe) {
+                System.out.println("Actualizando...");
+                alumnoData.actualizarAlumno(a);
+            }
+            else {
+                System.out.println("Guardando...");
+                alumnoData.guardarAlumno(a);
+            }
+            
             reset(evt);
         } catch (NumberFormatException e) {
             javax.swing.JOptionPane.showMessageDialog(this, "Ingrese valores válidos.\n Formato de fecha 20NN-NN-NN");
