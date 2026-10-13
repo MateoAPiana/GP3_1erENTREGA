@@ -66,6 +66,11 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
         jLabel6.setText("Fecha de Nacimiento:");
 
         btnNuevo.setText("Nuevo");
+        btnNuevo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                reset(evt);
+            }
+        });
 
         btnEliminar.setText("Eliminar");
         btnEliminar.setEnabled(false);
@@ -293,6 +298,13 @@ private void limpiarCampos() {
     chkEstado.setSelected(true);
     txtDni.requestFocus();
     }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void reset(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reset
+        txtDni.setText("");
+        txtNombre.setText("");
+        txtFechaNac.setText("");
+        chkEstado.setSelected(false);
+    }//GEN-LAST:event_reset
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
