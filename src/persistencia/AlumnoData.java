@@ -120,6 +120,16 @@ public class AlumnoData {
       
     }  // UPDATE SET
     
+    public void bajaLogica(Alumno a){
+        a.setActivo(false);
+        actualizarAlumno(a);
+    }
+    
+    public void altaLogica(Alumno a){
+        a.setActivo(true);
+        actualizarAlumno(a);
+    }
+    
     public void borrarAlumno(int id){
             
         String query = "DELETE FROM Alumno WHERE idAlumno=?";  //1
