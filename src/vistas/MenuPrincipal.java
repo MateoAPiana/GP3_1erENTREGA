@@ -45,11 +45,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jDesktopPane1.setLayout(jDesktopPane1Layout);
         jDesktopPane1Layout.setHorizontalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 570, Short.MAX_VALUE)
+            .addGap(0, 913, Short.MAX_VALUE)
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 294, Short.MAX_VALUE)
+            .addGap(0, 474, Short.MAX_VALUE)
         );
 
         jMenu1.setText("Alumno");
@@ -82,16 +82,13 @@ public class MenuPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jDesktopPane1)
-                .addContainerGap())
+            .addComponent(jDesktopPane1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(47, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
                 .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -101,7 +98,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         jDesktopPane1.removeAll();
         jDesktopPane1.repaint();
-        VistaAlumno va = new VistaAlumno();
+        VistaAlumno va  = new VistaAlumno();
+        va.setSize(860, 300);
+        int x = (jDesktopPane1.getWidth() - va.getWidth()) / 2;
+        int y = (jDesktopPane1.getHeight() - va.getHeight()) / 2;
+        va.setLocation(x, y);
         va.setVisible(true);
         jDesktopPane1.add(va);
         jDesktopPane1.moveToFront(va);
@@ -112,13 +113,13 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jDesktopPane1.repaint();
 
         VistaMateria vm = new VistaMateria();
-        jDesktopPane1.add(vm);
-        vm.setVisible(true);
-
-        // Esto calcula el centro exacto del escritorio para que la ventana nazca prolija
+        vm.setSize(860, 300);
         int x = (jDesktopPane1.getWidth() - vm.getWidth()) / 2;
         int y = (jDesktopPane1.getHeight() - vm.getHeight()) / 2;
         vm.setLocation(x, y);
+        
+        jDesktopPane1.add(vm);
+        vm.setVisible(true);
 
         jDesktopPane1.moveToFront(vm);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
