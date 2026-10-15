@@ -46,6 +46,10 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Salir del Sistema"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="salir"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cerrarPrograma"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>

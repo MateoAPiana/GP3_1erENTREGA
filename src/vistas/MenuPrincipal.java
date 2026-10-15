@@ -72,6 +72,12 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMenu3.setText("Salir");
 
         jMenuItem3.setText("Salir del Sistema");
+        jMenuItem3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                salir(evt);
+            }
+        });
+        jMenuItem3.addActionListener(this::cerrarPrograma);
         jMenu3.add(jMenuItem3);
 
         jMenuBar1.add(jMenu3);
@@ -127,6 +133,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private void jMenu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu2ActionPerformed
         
     }//GEN-LAST:event_jMenu2ActionPerformed
+
+    private void salir(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_salir
+        this.dispose();
+    }//GEN-LAST:event_salir
+
+    private void cerrarPrograma(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cerrarPrograma
+        this.dispose();
+    }//GEN-LAST:event_cerrarPrograma
 
     /**
      * @param args the command line arguments
