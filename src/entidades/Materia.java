@@ -47,4 +47,8 @@ public class Materia {
     public void setEstado(int estado) {
         this.estado = estado;
     }    
+
+    public Object getAnio() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

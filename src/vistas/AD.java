@@ -14,6 +14,23 @@ public class AD {
     private MiConexion conexion;
 
     public static void main(String[] args) {
+      try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) { // O el Look and Feel que utilicen en el proyecto
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (Exception ex) {
+            java.util.logging.Logger.getLogger(AD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+
+        // Lanzar la ventana principal
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new vistas.MenuPrincipal().setVisible(true);
+            }
+        });
         MiConexion miCon = new AD().conectar();
         
         MateriaData materiaData = new MateriaData(miCon);
@@ -64,7 +81,7 @@ public class AD {
         
         
         // Profe: Cambia AQUI 3008 a 3006 !!!!
-        conexion = new MiConexion("jdbc:mysql://localhost:3308/c1g3universidad", "root", "");
+        conexion = new MiConexion("jdbc:mysql://localhost:3306/c1g3universidad", "root", "");
         
         return conexion;
     }

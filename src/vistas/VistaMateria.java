@@ -208,7 +208,6 @@ public class VistaMateria extends javax.swing.JInternalFrame {
         int anio = Integer.parseInt(txtAnio.getText().trim());
         int estado = chkEstado.isSelected() ? 1 : 0;
 
-        // Conexión directa a la BD enviando el año que exige la tabla
         java.sql.Connection con = java.sql.DriverManager.getConnection("jdbc:mysql://localhost:3306/c1g3universidad", "root", "");
         
         String sql = "INSERT INTO materia (nombre, año, estado) VALUES (?, ?, ?)";

@@ -9,7 +9,7 @@ package vistas;
  * @author verit
  */
 public class MenuPrincipal extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MenuPrincipal.class.getName());
 
     /**
@@ -17,12 +17,12 @@ public class MenuPrincipal extends javax.swing.JFrame {
      */
     public MenuPrincipal() {
         initComponents();
-    // Agregamos el cierre del sistema de forma directa y segura acá abajo:
-    jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            System.exit(0);
-        }
-    });
+        // Agregamos el cierre del sistema de forma directa y segura acá abajo:
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                System.exit(0);
+            }
+        });
     }
 
     /**
@@ -55,7 +55,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jDesktopPane1.setLayout(jDesktopPane1Layout);
         jDesktopPane1Layout.setHorizontalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 453, Short.MAX_VALUE)
+            .addGap(0, 535, Short.MAX_VALUE)
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -82,6 +82,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMenu4.setText("Administraccion");
 
         jMenuItem4.setText("Manejo de Inscripciones");
+        jMenuItem4.addActionListener(this::jMenuItem4ActionPerformed);
         jMenu4.add(jMenuItem4);
 
         jMenuItem5.setText("Carga de Notas");
@@ -110,11 +111,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jDesktopPane1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jDesktopPane1)
         );
 
         pack();
@@ -123,7 +124,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         jDesktopPane1.removeAll();
         jDesktopPane1.repaint();
-        VistaAlumno va = new VistaAlumno();
+        VistaAlumno va  = new VistaAlumno();
         va.setVisible(true);
         jDesktopPane1.add(va);
         jDesktopPane1.moveToFront(va);
@@ -146,12 +147,26 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu2ActionPerformed
-        
+
     }//GEN-LAST:event_jMenu2ActionPerformed
 
     private void jMenu3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu3ActionPerformed
-     System.exit(0);
+        System.exit(0);
     }//GEN-LAST:event_jMenu3ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        jDesktopPane1.removeAll();
+        jDesktopPane1.repaint();
+
+        VistaInscripcion vi = new VistaInscripcion();
+        jDesktopPane1.add(vi);
+        vi.setVisible(true);
+
+        int x = (jDesktopPane1.getWidth() - vi.getWidth()) / 2;
+        int y = (jDesktopPane1.getHeight() - vi.getHeight()) / 2;
+        vi.setLocation(x, y);
+
+        jDesktopPane1.moveToFront(vi);    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     /**
      * @param args the command line arguments
