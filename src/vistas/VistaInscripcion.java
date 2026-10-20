@@ -21,6 +21,10 @@ import persistencia.MiConexion;
  */
 public class VistaInscripcion extends javax.swing.JInternalFrame {
 
+    CursadaData cursadaData = null;
+    AlumnoData aluData = null;
+    MateriaData materiaData = null;
+    
     private DefaultTableModel modelo = new DefaultTableModel() {
         @Override
         public boolean isCellEditable(int row, int column) {
@@ -31,6 +35,12 @@ public class VistaInscripcion extends javax.swing.JInternalFrame {
     public VistaInscripcion() {
 
         initComponents();
+        
+        MiConexion conexion = new MiConexion("jdbc:mysql://localhost:3308/c1g3universidad", "root", "");
+        aluData = new AlumnoData(conexion);
+        materiaData = new MateriaData(conexion);
+        cursadaData = new CursadaData(conexion);
+        
         armarCabeceraTabla();
         cargarAlumnos();
         
@@ -41,8 +51,6 @@ public class VistaInscripcion extends javax.swing.JInternalFrame {
     }
 
     private void cargarAlumnos() {
-        MiConexion conexion = new MiConexion("jdbc:mysql://localhost:3308/c1g3universidad", "root", "");
-        AlumnoData aluData = new AlumnoData(conexion);
         List<Alumno> listaAlumnos = aluData.listarAlumnos();
 
         for (Alumno a : listaAlumnos) {
@@ -71,8 +79,6 @@ public class VistaInscripcion extends javax.swing.JInternalFrame {
             return;
         }
 
-        MiConexion conexion = new MiConexion("jdbc:mysql://localhost:3308/c1g3universidad", "root", "");
-        CursadaData cursadaData = new CursadaData(conexion);
         List<Materia> lista = cursadaData.obtenerMateriasCursadas(seleccionado.getId());
 
         System.out.println("Materias inscriptas encontradas: " + lista.size()); // <-- Mirá la consola de NetBeans
@@ -89,8 +95,6 @@ public class VistaInscripcion extends javax.swing.JInternalFrame {
             return;
         }
 
-        MiConexion conexion = new MiConexion("jdbc:mysql://localhost:3308/c1g3universidad", "root", "");
-        CursadaData cursadaData = new CursadaData(conexion);
         List<Materia> lista = cursadaData.obtenerMateriasNoCursadas(seleccionado.getId());
         
                 System.out.println("Materias no inscriptas encontradas: " + lista.size()); // <-- Mirá la consola de NetBeans
@@ -243,8 +247,6 @@ public class VistaInscripcion extends javax.swing.JInternalFrame {
                 Materia m = new Materia(idMateria, nombreMateria, estadoMateria);
                 Cursada c = new Cursada(seleccionado, m, 0, 0, 1);
 
-                MiConexion conexion = new MiConexion("jdbc:mysql://localhost:3308/c1g3universidad", "root", "");
-                CursadaData cursadaData = new CursadaData(conexion);
                 cursadaData.guardarCursada(c);
 
                 cargaDatosNoInscriptas();
@@ -275,8 +277,6 @@ public class VistaInscripcion extends javax.swing.JInternalFrame {
                 Alumno seleccionado = (Alumno) cbAlumnos.getSelectedItem();
                 int idMateria = (Integer) tMaterias.getValueAt(filaSeleccionada, 0);
 
-                MiConexion conexion = new MiConexion("jdbc:mysql://localhost:3308/c1g3universidad", "root", "");
-                CursadaData cursadaData = new CursadaData(conexion);
                 cursadaData.borrarCursada(seleccionado.getId(), idMateria);
 
                 cargaDatosInscriptas();
