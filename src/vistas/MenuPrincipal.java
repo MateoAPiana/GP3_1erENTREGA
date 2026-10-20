@@ -18,6 +18,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
     public MenuPrincipal() {
         initComponents();
         
+        this.setSize(1000, 500);
+        this.repaint();
+        
+        jMenuItem5.addActionListener(this::jMenuItem5ActionPerformed);
+        
         this.setLocationRelativeTo(null);
         // Agregamos el cierre del sistema de forma directa y segura acá abajo:
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
@@ -132,6 +137,19 @@ public class MenuPrincipal extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt){
+        jDesktopPane1.removeAll();
+        jDesktopPane1.repaint();
+        VistaCargaNotas va  = new VistaCargaNotas();
+        va.setSize(860, 300);
+        int x = (jDesktopPane1.getWidth() - va.getWidth()) / 2;
+        int y = (jDesktopPane1.getHeight() - va.getHeight()) / 2;
+        va.setLocation(x, y);
+        va.setVisible(true);
+        jDesktopPane1.add(va);
+        jDesktopPane1.moveToFront(va);
+    }
+    
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         jDesktopPane1.removeAll();
         jDesktopPane1.repaint();
