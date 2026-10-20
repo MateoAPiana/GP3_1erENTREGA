@@ -9,7 +9,7 @@ package vistas;
  * @author verit
  */
 public class MenuPrincipal extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MenuPrincipal.class.getName());
 
     /**
@@ -19,6 +19,12 @@ public class MenuPrincipal extends javax.swing.JFrame {
         initComponents();
         
         this.setLocationRelativeTo(null);
+        // Agregamos el cierre del sistema de forma directa y segura acá abajo:
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                System.exit(0);
+            }
+        });
     }
 
     /**
@@ -36,10 +42,16 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
+        jMenu4 = new javax.swing.JMenu();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
+        jMenu5 = new javax.swing.JMenu();
+        jMenuItem6 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(600, 500));
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
@@ -69,7 +81,26 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu2);
 
+        jMenu4.setText("Administraccion");
+
+        jMenuItem4.setText("Manejo de Inscripciones");
+        jMenuItem4.addActionListener(this::jMenuItem4ActionPerformed);
+        jMenu4.add(jMenuItem4);
+
+        jMenuItem5.setText("Carga de Notas");
+        jMenu4.add(jMenuItem5);
+
+        jMenuBar1.add(jMenu4);
+
+        jMenu5.setText("Consultas");
+
+        jMenuItem6.setText("Listado de Inscripciones");
+        jMenu5.add(jMenuItem6);
+
+        jMenuBar1.add(jMenu5);
+
         jMenu3.setText("Salir");
+        jMenu3.addActionListener(this::jMenu3ActionPerformed);
 
         jMenuItem3.setText("Salir del Sistema");
         jMenuItem3.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -131,7 +162,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu2ActionPerformed
-        
+
     }//GEN-LAST:event_jMenu2ActionPerformed
 
     private void salir(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_salir
@@ -141,6 +172,23 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private void cerrarPrograma(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cerrarPrograma
         this.dispose();
     }//GEN-LAST:event_cerrarPrograma
+    private void jMenu3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu3ActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_jMenu3ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        jDesktopPane1.removeAll();
+        jDesktopPane1.repaint();
+
+        VistaInscripcion vi = new VistaInscripcion();
+        jDesktopPane1.add(vi);
+        vi.setVisible(true);
+
+        int x = (jDesktopPane1.getWidth() - vi.getWidth()) / 2;
+        int y = (jDesktopPane1.getHeight() - vi.getHeight()) / 2;
+        vi.setLocation(x, y);
+
+        jDesktopPane1.moveToFront(vi);    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -172,9 +220,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
     // End of variables declaration//GEN-END:variables
 }
