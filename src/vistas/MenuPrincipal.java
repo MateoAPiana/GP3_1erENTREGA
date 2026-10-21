@@ -4,6 +4,8 @@
  */
 package vistas;
 
+import java.awt.event.ActionEvent;
+
 /**
  *
  * @author verit
@@ -17,8 +19,25 @@ public class MenuPrincipal extends javax.swing.JFrame {
      */
     public MenuPrincipal() {
         initComponents();
-        
+
         this.setLocationRelativeTo(null);
+        // 1. Alumno
+        jMenuItem1.addActionListener(e -> jMenuItem1ActionPerformed(e));
+
+        // 2. Materia
+        jMenuItem2.addActionListener(e -> jMenuItem2ActionPerformed(e));
+
+        // 3. Manejo de Inscripciones
+        jMenuItem4.addActionListener(e -> jMenuItem4ActionPerformed(e));
+
+        // 4. Carga de Notas
+        jMenuItem5.addActionListener(e -> jMenuItem5ActionPerformed(e));
+
+        // 5. Listado de Inscripciones
+        jMenuItem6.addActionListener(e -> jMenuItem6ActionPerformed(e));
+
+        // 6. Salir
+        jMenuItem3.addActionListener(e -> System.exit(0));
         // Agregamos el cierre del sistema de forma directa y segura acá abajo:
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -154,7 +173,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         int x = (jDesktopPane1.getWidth() - vm.getWidth()) / 2;
         int y = (jDesktopPane1.getHeight() - vm.getHeight()) / 2;
         vm.setLocation(x, y);
-        
+
         jDesktopPane1.add(vm);
         vm.setVisible(true);
 
@@ -230,4 +249,23 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     // End of variables declaration//GEN-END:variables
+
+    private void jMenuItem5ActionPerformed(ActionEvent e) {
+
+    }
+
+    private void jMenuItem6ActionPerformed(ActionEvent e) {
+        jDesktopPane1.removeAll();
+        jDesktopPane1.repaint();
+
+        VistaListarInscripciones vli = new VistaListarInscripciones();
+        vli.setVisible(true);
+
+        int x = (jDesktopPane1.getWidth() - vli.getWidth()) / 2;
+        int y = (jDesktopPane1.getHeight() - vli.getHeight()) / 2;
+        vli.setLocation(x, y);
+
+        jDesktopPane1.add(vli);
+        jDesktopPane1.moveToFront(vli);
+    }
 }
