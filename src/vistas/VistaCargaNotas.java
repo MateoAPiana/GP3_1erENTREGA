@@ -7,7 +7,9 @@ package vistas;
 import entidades.Alumno;
 import entidades.Cursada;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import persistencia.AlumnoData;
 import persistencia.CursadaData;
 import persistencia.MiConexion;
@@ -108,8 +110,10 @@ public class VistaCargaNotas extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(tNotas);
 
         btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(this::guardarCambios);
 
         btnSalir.setText("Salir");
+        btnSalir.addActionListener(this::btnSalirActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -127,14 +131,13 @@ public class VistaCargaNotas extends javax.swing.JInternalFrame {
                         .addComponent(cbAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(36, 36, 36)
+                        .addComponent(btnGuardar)
+                        .addGap(33, 33, 33)
+                        .addComponent(btnSalir)))
                 .addContainerGap(7, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addComponent(btnGuardar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnSalir)
-                .addGap(50, 50, 50))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnGuardar, btnSalir});
@@ -149,11 +152,11 @@ public class VistaCargaNotas extends javax.swing.JInternalFrame {
                     .addComponent(cbAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(67, 67, 67)
+                .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardar)
                     .addComponent(btnSalir))
-                .addContainerGap(87, Short.MAX_VALUE))
+                .addContainerGap(128, Short.MAX_VALUE))
         );
 
         layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnGuardar, btnSalir});
@@ -164,6 +167,26 @@ public class VistaCargaNotas extends javax.swing.JInternalFrame {
     private void reloadTable(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reloadTable
         cargarNotas();
     }//GEN-LAST:event_reloadTable
+
+    private void guardarCambios(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarCambios
+        TableModel model = tNotas.getModel();
+        
+        for (int i = 0; i < model.getRowCount(); i++){
+            try {
+                Cursada c = cursadaData.buscarCursada(Integer.valueOf(model.getValueAt(i, 0).toString()));
+                c.setNota(Float.valueOf(model.getValueAt(i, 2).toString()));
+                cursadaData.actualizarCursada(c);
+            } catch (Exception err) {
+                JOptionPane.showMessageDialog(null, "Hubo un problema, revise que los datos sean válidos");
+            }
+        }
+        
+        JOptionPane.showMessageDialog(null, "Datos de cursada actualizados con éxito");
+    }//GEN-LAST:event_guardarCambios
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnSalirActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

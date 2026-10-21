@@ -19,6 +19,34 @@ public class CursadaData {
     public CursadaData(MiConexion conexion) {
         con = conexion.buscarConexion();
     }
+    
+    public Cursada buscarCursada(int id){
+        String sql = "SELECT * FROM cursada WHERE idCursada = ?";
+        
+        AlumnoData ad = new AlumnoData(0, con);
+        MateriaData md = new MateriaData(0, con);
+        Cursada c = new Cursada();
+        
+        try{
+            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1, id);
+            ResultSet rs =  ps.executeQuery();
+            
+            while(rs.next()){
+                c.setId(rs.getInt(1));
+                Alumno a = ad.buscarAlumno(rs.getInt(2));
+                c.setAlumno(a);
+                Materia m = md.buscarMateria(rs.getInt(3));
+                c.setMateria(m);
+                c.setNota(rs.getFloat(4));
+                c.setAsist(rs.getInt(5));
+                c.setCursa(rs.getInt(6));
+            }
+        }catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Cursada: " + ex.getMessage());
+        }
+        return c;
+    }
 
     public void guardarCursada(Cursada cursada) {
         String sql = "INSERT INTO cursada (nota, asist, cursa, idAlumno, idMateria) VALUES (?, ?, ?, ?, ?)";
@@ -81,7 +109,7 @@ public class CursadaData {
                 c.setAlumno(a);
                 Materia m = md.buscarMateria(rs.getInt(3));
                 c.setMateria(m);
-                c.setNota(rs.getInt(4));
+                c.setNota(rs.getFloat(4));
                 c.setAsist(rs.getInt(5));
                 c.setCursa(rs.getInt(6));
                 cursadas.add(c);
@@ -112,6 +140,22 @@ public class CursadaData {
             JOptionPane.showMessageDialog(null, "Error al obtener materias no cursadas: " + ex.getMessage());
         }
         return materias;
+    }
+    
+    public void actualizarCursada(Cursada c){
+        String sql = "UPDATE cursada SET idAlumno = ?, idMateria = ?, nota = ?, asist = ?, cursa = ? WHERE idCursada = ?";
+        try{
+            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1, c.getAlumno().getId());
+            ps.setInt(2, c.getMateria().getId());
+            ps.setFloat(3, c.getNota());
+            ps.setFloat(4, c.getAsist());
+            ps.setInt(5, c.getCursa());
+            ps.setInt(6, c.getId());
+            ps.executeUpdate();
+        }catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al acceder a la tabla Cursada: " + ex.getMessage());
+        }
     }
 
     public void borrarCursada(int idAlumno, int idMateria) {
