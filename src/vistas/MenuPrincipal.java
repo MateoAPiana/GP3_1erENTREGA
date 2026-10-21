@@ -273,9 +273,9 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem6;
     // End of variables declaration//GEN-END:variables
 
-    private void jMenuItem5ActionPerformed(ActionEvent e) {
+//    private void jMenuItem5ActionPerformed(ActionEvent e) {
 
-    }
+//    }
 
     private void jMenuItem6ActionPerformed(ActionEvent e) {
         jDesktopPane1.removeAll();
