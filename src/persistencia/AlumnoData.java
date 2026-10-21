@@ -21,6 +21,10 @@ public class AlumnoData {
     public AlumnoData(MiConexion conexion) {
         this.con = conexion.buscarConexion();
     }
+    
+    public AlumnoData(int _a, Connection con) {
+        this.con = con;
+    }
 
     public void guardarAlumno(Alumno a) {    // obj alumno sin id valido
         String sql = "INSERT INTO alumno(dni, nombre, fecNac, activo) VALUES (?,?,?,?)";  //1

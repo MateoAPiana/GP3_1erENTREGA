@@ -18,6 +18,10 @@ public class MateriaData {
     public MateriaData(MiConexion con) {
         this.con = con.buscarConexion();
     }
+    
+    public MateriaData(int _a, Connection con) {
+        this.con = con;
+    }
 
     public void guardarMateria(Materia m) {
         String sql = "INSERT INTO Materia (nombre, estado) VALUES (?, ?)";

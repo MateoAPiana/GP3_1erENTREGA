@@ -4,17 +4,70 @@
  */
 package vistas;
 
-/**
- *
- * @author verit
- */
+import entidades.Alumno;
+import entidades.Cursada;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+import persistencia.AlumnoData;
+import persistencia.CursadaData;
+import persistencia.MiConexion;
+
 public class VistaCargaNotas extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form VistaCargaNotas
-     */
+    CursadaData cursadaData = null;
+    AlumnoData aluData = null;
+    
+    private DefaultTableModel modelo = new DefaultTableModel() {
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            if(column == 2) return true;
+            else return false;
+        }
+    };
+    
     public VistaCargaNotas() {
         initComponents();
+        MiConexion conexion = new MiConexion("jdbc:mysql://localhost:3308/c1g3universidad", "root", "");
+        aluData = new AlumnoData(conexion);
+        cursadaData = new CursadaData(conexion);
+        
+        armarCabeceraTabla();
+        listarAlumnos();
+        cargarNotas();
+    }
+    
+    public void listarAlumnos(){
+        List<Alumno> listaAlumnos = aluData.listarAlumnos();
+
+        for (Alumno a : listaAlumnos) {
+            cbAlumnos.addItem( a.getId() + " - " + a.getNombre());
+        }
+    }
+
+    private void armarCabeceraTabla() {
+        modelo.addColumn("ID");
+        modelo.addColumn("Materia");
+        modelo.addColumn("Nota");
+        tNotas.setModel(modelo);
+    }
+
+    private void borrarFilasTabla() {
+        int filas = modelo.getRowCount() - 1;
+        for (int i = filas; i >= 0; i--) {
+            modelo.removeRow(i);
+        }
+    }
+    
+    private void cargarNotas() {
+        borrarFilasTabla();
+        
+        int id = Integer.valueOf(cbAlumnos.getSelectedItem().toString().substring(0,2));
+
+        List<Cursada> lista = cursadaData.obtenerCursadasPorAlumno(id);
+
+        for (Cursada c : lista) {
+            modelo.addRow(new Object[]{c.getId(), c.getMateria().getNombre(), c.getNota()});
+        }
     }
 
     /**
@@ -39,7 +92,7 @@ public class VistaCargaNotas extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Seleccione un alumno:");
 
-        cbAlumnos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbAlumnos.addActionListener(this::reloadTable);
 
         tNotas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -107,6 +160,10 @@ public class VistaCargaNotas extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void reloadTable(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reloadTable
+        cargarNotas();
+    }//GEN-LAST:event_reloadTable
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
