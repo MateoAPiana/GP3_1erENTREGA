@@ -21,7 +21,7 @@ public class VistaAlumno extends javax.swing.JInternalFrame {
         initComponents();
         ((javax.swing.plaf.basic.BasicInternalFrameUI) this.getUI()).setNorthPane(null);
         // Profe: Cambia AQUI 3008 a 3006 !!!!
-        MiConexion conexion = new MiConexion("jdbc:mysql://localhost:3308/c1g3universidad", "root", "");
+        MiConexion conexion = new MiConexion("jdbc:mysql://localhost:3306/c1g3universidad", "root", "");
         this.alumnoData = new AlumnoData(conexion);
     }
 

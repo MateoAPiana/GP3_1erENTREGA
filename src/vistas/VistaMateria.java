@@ -17,7 +17,7 @@ public class VistaMateria extends javax.swing.JInternalFrame {
     
     public VistaMateria() {
         initComponents();
-        MiConexion conexion = new MiConexion("jdbc:mysql://localhost:3308/c1g3universidad", "root", "");
+        MiConexion conexion = new MiConexion("jdbc:mysql://localhost:3306/c1g3universidad", "root", "");
         matData = new MateriaData(conexion);
     }
 

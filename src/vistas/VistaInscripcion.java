@@ -36,7 +36,7 @@ public class VistaInscripcion extends javax.swing.JInternalFrame {
 
         initComponents();
         
-        MiConexion conexion = new MiConexion("jdbc:mysql://localhost:3308/c1g3universidad", "root", "");
+        MiConexion conexion = new MiConexion("jdbc:mysql://localhost:3306/c1g3universidad", "root", "");
         aluData = new AlumnoData(conexion);
         materiaData = new MateriaData(conexion);
         cursadaData = new CursadaData(conexion);
